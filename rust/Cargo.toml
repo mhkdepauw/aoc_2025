@@ -8,3 +8,7 @@ edition = "2024"
 [[bin]]
 name = "day0"
 path = "src/day0/main.rs"
+
+[[bin]]
+name = "day1"
+path = "src/day1/main.rs"
