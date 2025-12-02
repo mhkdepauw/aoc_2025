@@ -35,15 +35,13 @@ fn part1(megavec: Vec<String>) -> i32 {
 
 fn part2(megavec: Vec<String>) -> i32 {
     let mut zero_counter: i32 = 0;
-    let ops = megavec
-        .iter()
-        .map(|s| {
-            if s.starts_with('L') {
-                -s[1..].parse::<i32>().unwrap()
-            } else {
-                s[1..].parse::<i32>().unwrap()
-            }
-        });
+    let ops = megavec.iter().map(|s| {
+        if s.starts_with('L') {
+            -s[1..].parse::<i32>().unwrap()
+        } else {
+            s[1..].parse::<i32>().unwrap()
+        }
+    });
     ops.fold(50, |acc: i32, x: i32| {
         zero_counter += x.abs() / 100;
         let nx = x % 100;
