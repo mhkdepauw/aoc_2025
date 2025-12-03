@@ -19,7 +19,7 @@ fn part1(megavec: Vec<String>) -> u32 {
     }
     max_joltage
 }
-
+// TODO: check for 12 best numbers by keeping in mind how many number there will be after the first pick, limit picks everytime
 fn part2(megavec: Vec<String>) -> i32 {
     return 0;
 }
