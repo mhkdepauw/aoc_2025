@@ -1,12 +1,10 @@
-use std::ops::Index;
-use std::str::Chars;
 use rust::read_lines;
 
 fn main() {
     let dummy_input: Vec<String> = "987654321111111,811111111111119,234234234234278,818181911112111".split(",").map(|s| s.to_string()).collect();
     let real_input: Vec<String> = read_lines(3);
     println!("{}", part1(real_input.clone()));
-    // println!("{}", part2(dummy_input.clone()));
+    println!("{}", part2(real_input.clone()));
 }
 
 fn part1(megavec: Vec<String>) -> u32 {
@@ -19,9 +17,20 @@ fn part1(megavec: Vec<String>) -> u32 {
     }
     max_joltage
 }
-// TODO: check for 12 best numbers by keeping in mind how many number there will be after the first pick, limit picks everytime
-fn part2(megavec: Vec<String>) -> i32 {
-    return 0;
+fn part2(megavec: Vec<String>) -> u64 {
+    let mut max_joltage: u64 = 0;
+    for batbank in megavec.iter().map(|s| s.chars().map(|c|c.to_digit(10).unwrap()).collect::<Vec<u32>>()) {
+        let mut batbank_max_joltage: u64 = 0;
+        let mut start_i = 0;
+        for l in 0..12 {
+            let batbank_minus:Vec<u32> = batbank[start_i..batbank.len()-(11-l)].to_owned();
+            let (d, i) = highest_non_ending_nr(batbank_minus.clone());
+            batbank_max_joltage = (batbank_max_joltage*10) + d as u64;
+            start_i += i+1;
+        }
+        max_joltage += batbank_max_joltage;
+    }
+    max_joltage
 }
 
 fn highest_non_ending_nr(batbank: Vec<u32>) -> (u32, usize) {
