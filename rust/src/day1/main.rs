@@ -6,11 +6,11 @@ fn main() {
         .map(|s| s.to_string())
         .collect();
     let real_input: Vec<String> = read_lines(1);
-    println!("{}", part1(real_input.clone()));
-    println!("{}", part2(real_input.clone()));
+    println!("{}", part1(&real_input));
+    println!("{}", part2(&real_input));
 }
 
-fn part1(megavec: Vec<String>) -> i32 {
+fn part1(megavec: &Vec<String>) -> i32 {
     let mut zero_counter: i32 = 0;
     let ops: Vec<i32> = megavec
         .iter()
@@ -33,7 +33,7 @@ fn part1(megavec: Vec<String>) -> i32 {
     zero_counter
 }
 
-fn part2(megavec: Vec<String>) -> i32 {
+fn part2(megavec: &Vec<String>) -> i32 {
     let mut zero_counter: i32 = 0;
     let ops = megavec.iter().map(|s| {
         if s.starts_with('L') {

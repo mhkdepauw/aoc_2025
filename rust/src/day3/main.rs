@@ -3,15 +3,15 @@ use rust::read_lines;
 fn main() {
     let dummy_input: Vec<String> = "987654321111111,811111111111119,234234234234278,818181911112111".split(",").map(|s| s.to_string()).collect();
     let real_input: Vec<String> = read_lines(3);
-    println!("{}", part1(real_input.clone()));
-    println!("{}", part2(real_input.clone()));
+    println!("{}", part1(&real_input));
+    println!("{}", part2(&real_input));
 }
 
-fn part1(megavec: Vec<String>) -> u64 {
+fn part1(megavec: &Vec<String>) -> u64 {
     highest_substring(megavec,2)
 }
-fn part2(megavec: Vec<String>) -> u64 {
-    highest_substring(megavec,12)
+fn part2(megavec: &Vec<String>) -> u64 {
+    highest_substring(megavec, 12)
 }
 
 fn highest_non_ending_nr(numvec: Vec<u32>) -> (u32, usize) {
@@ -19,7 +19,7 @@ fn highest_non_ending_nr(numvec: Vec<u32>) -> (u32, usize) {
     (highest, numvec.iter().position(|x1| {*x1 == highest}).unwrap())
 }
 
-fn highest_substring(megavec: Vec<String>, string_length: usize) -> u64 {
+fn highest_substring(megavec: &Vec<String>, string_length: usize) -> u64 {
     let mut total_highest: u64 = 0;
     for numvec in megavec.iter().map(|s| s.chars().map(|c|c.to_digit(10).unwrap()).collect::<Vec<u32>>()) {
         let mut numvec_highest: u64 = 0;
