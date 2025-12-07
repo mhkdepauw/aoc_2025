@@ -1,7 +1,7 @@
+use rust::read_lines;
 use std::fs;
 use std::fs::read_to_string;
 use std::str::Chars;
-use rust::read_lines;
 
 fn main() {
     let dummy_input: Vec<String> = read_to_string("src/day6/dummy_input.txt")
@@ -16,17 +16,20 @@ fn main() {
 
 fn part1(megavec: &Vec<String>) -> i64 {
     let mut total_count: i64 = 0;
-    let (ops, num_list): (Vec<String>,Vec<Vec<i64>>) = to_op_list(megavec);
+    let (ops, num_list): (Vec<String>, Vec<Vec<i64>>) = to_op_list(megavec);
     for i in 0..num_list.len() {
-        if ops[i] == "*" { total_count += num_list[i].iter().product::<i64>()}
-        else { total_count += num_list[i].iter().sum::<i64>() }
+        if ops[i] == "*" {
+            total_count += num_list[i].iter().product::<i64>()
+        } else {
+            total_count += num_list[i].iter().sum::<i64>()
+        }
     }
     total_count
 }
 
 fn part2(megavec: &Vec<String>) -> i64 {
     let mut total_count: i64 = 0;
-    let megavec_chars: Vec<Vec<char>> = megavec.iter().map(|s|s.chars().collect()).collect();
+    let megavec_chars: Vec<Vec<char>> = megavec.iter().map(|s| s.chars().collect()).collect();
     let op_char_list: &Vec<char> = megavec_chars.last().unwrap();
     let mut num_start_list: Vec<usize> = vec![];
     for i in 0..megavec.last().unwrap().chars().count() {
@@ -37,11 +40,10 @@ fn part2(megavec: &Vec<String>) -> i64 {
     let mut full_numbers_list_chars: Vec<Vec<Vec<char>>> = vec![];
     for i in 0..num_start_list.len() {
         let mut numbers_list_chars: Vec<Vec<char>> = vec![];
-        for s in &megavec_chars[..megavec_chars.len()-1] {
-            if i < num_start_list.len()-1 {
-                numbers_list_chars.push(s[num_start_list[i]..num_start_list[i+1]-1].to_vec());
-            }
-            else {
+        for s in &megavec_chars[..megavec_chars.len() - 1] {
+            if i < num_start_list.len() - 1 {
+                numbers_list_chars.push(s[num_start_list[i]..num_start_list[i + 1] - 1].to_vec());
+            } else {
                 numbers_list_chars.push(s[num_start_list[i]..].to_vec());
             }
         }
@@ -56,16 +58,25 @@ fn part2(megavec: &Vec<String>) -> i64 {
             for i in 0..list.len() {
                 to_parse.push(list[i][j]);
             }
-            int_list.push(to_parse.iter().filter_map(|c| if c.is_digit(10) { Some(c) } else { None }).collect::<String>().parse().unwrap());
+            int_list.push(
+                to_parse
+                    .iter()
+                    .filter_map(|c| if c.is_digit(10) { Some(c) } else { None })
+                    .collect::<String>()
+                    .parse()
+                    .unwrap(),
+            );
         }
         int_listlist.push(int_list);
     }
-    let op_list: Vec<&char> = op_char_list.iter().filter(|&&c| c == '*' || c == '+').collect();
+    let op_list: Vec<&char> = op_char_list
+        .iter()
+        .filter(|&&c| c == '*' || c == '+')
+        .collect();
     for i in 0..op_list.len() {
         if *op_list[i] == '*' {
             total_count += int_listlist[i].iter().product::<i64>();
-        }
-        else {
+        } else {
             total_count += int_listlist[i].iter().sum::<i64>();
         }
     }
